@@ -88,30 +88,30 @@ def printServerDetails():
 
 #try : 
 Configuration()
-match ConnectionConfiguration.SERVERCLIENT :
-    case '-s':
+#match ConnectionConfiguration.SERVERCLIENT :
+if ConnectionConfiguration.SERVERCLIENT == '-s':
        
         
-        match ConnectionConfiguration.PROTOCOL:
-                        case '-t':
-                                    startListen(startserver(ipv4,tcp))
+        if ConnectionConfiguration.PROTOCOL == '-t':
+                        
+             startListen(startserver(ipv4,tcp))
                                     
-                        case '-u':   
-                            if startserver(ipv4,udp):
-                                printServerDetails()
-                                print(f'UDP SERVER IS UP AND LISTENING')
-                                while True:
-                                    receiveddata = server.recvfrom(1024)
-                                    message = receiveddata[0]
-                                    address = receiveddata[1]
-                                    clientMsg = "Message from Client: " + message.decode('utf-8')
-                                    clientIP  = "Client IP Address: "+ address.decode('utf-8')
-                                    server.sendto(encodingMessages('this is UDP server'),address)
-                                    print(clientMsg)
-                                    print(clientIP)
-    case '-c':
-         match ConnectionConfiguration.PROTOCOL:
-            case '-t':
+        if ConnectionConfiguration.PROTOCOL == '-u':   
+             if startserver(ipv4,udp):
+                printServerDetails()
+                print(f'UDP SERVER IS UP AND LISTENING')
+                while True:
+                 receiveddata = server.recvfrom(1024)
+                 message = receiveddata[0]
+                 address = receiveddata[1]
+                 clientMsg = "Message from Client: " + message.decode('utf-8')
+                 clientIP  = "Client IP Address: "+ address.decode('utf-8')
+                 server.sendto(encodingMessages('this is UDP server'),address)
+                 print(clientMsg)
+                 print(clientIP)
+if ConnectionConfiguration.SERVERCLIENT == '-c':
+         
+            if ConnectionConfiguration.PROTOCOL == '-t':
                      client = socket.socket(ipv4, tcp)
                      server_address = (ConnectionConfiguration.IPADDRESS, ConnectionConfiguration.PORT)
                      try :
@@ -130,7 +130,7 @@ match ConnectionConfiguration.SERVERCLIENT :
                              client.close()
                      
 
-            case '-u':
+            if ConnectionConfiguration.PROTOCOL == '-u':
                     client = socket.socket(ipv4, udp)
                     server_address = (ConnectionConfiguration.IPADDRESS, ConnectionConfiguration.PORT)
                     print(f"Connecting... ")
